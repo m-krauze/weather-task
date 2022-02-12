@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 import { store } from './store';
 
@@ -8,7 +9,9 @@ export function AppProvider(props: PropsWithChildren<{}>) {
 
   return (
     <Provider store={store}>
-      {children}
+      <BrowserRouter>
+        {children}
+      </BrowserRouter>
     </Provider>
   );
 }

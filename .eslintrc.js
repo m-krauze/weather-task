@@ -24,5 +24,9 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.ts'] }],
     'import/prefer-default-export': 'off',
+    'array-bracket-spacing': ['error', 'always'],
+    'react/require-default-props': [1, {
+      'ignoreFunctionalComponents': true
+    }]
   },
 };

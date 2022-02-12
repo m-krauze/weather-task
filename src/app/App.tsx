@@ -1,14 +1,19 @@
 import React from 'react';
-import { AppProvider } from './AppProvider';
+import { Routes, Route } from 'react-router-dom';
 
 export function App() {
   return (
-    <AppProvider>
+    <main>
       <div>
         <header>
           Weather Task
         </header>
+        <Routes>
+          <Route path="/" element={<>Home</>} />
+          <Route path="/:city" element={<>City or city not found</>} />
+          <Route path="*" element={<>404</>} />
+        </Routes>
       </div>
-    </AppProvider>
+    </main>
   );
 }
