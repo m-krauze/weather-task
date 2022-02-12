@@ -27,6 +27,8 @@ module.exports = {
     'array-bracket-spacing': ['error', 'always'],
     'react/require-default-props': [1, {
       'ignoreFunctionalComponents': true
-    }]
+    }],
+    'react/jsx-props-no-spreading': 0,
+    'max-classes-per-file': ["error", 2]
   },
 };
