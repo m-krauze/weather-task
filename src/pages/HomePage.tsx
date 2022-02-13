@@ -1,22 +1,11 @@
 import React from 'react';
-import { getClassName } from '../utils/getClassName';
 import { CitySearchForm } from '../features/city/components/CitySearchForm/CitySearchForm';
+import { ContentWrap } from '../components/ContentWrap/ContentWrap';
 
 export function HomePage() {
   return (
-    <div className={getClassName([
-      'flex',
-      'justify-center',
-    ])}
-    >
-      <div className={getClassName([
-        'border-2',
-        'border-sky-400',
-        'rounded-md',
-      ])}
-      >
-        <CitySearchForm />
-      </div>
-    </div>
+    <ContentWrap>
+      <CitySearchForm />
+    </ContentWrap>
   );
 }

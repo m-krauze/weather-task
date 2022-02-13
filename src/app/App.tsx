@@ -45,20 +45,26 @@ export function App() {
             />
           </div>
         </header>
-        <Routes>
-          <Route
-            path="/"
-            element={<HomePage />}
-          />
-          <Route
-            path="/:city"
-            element={<>City or city not found</>}
-          />
-          <Route
-            path="*"
-            element={<>404</>}
-          />
-        </Routes>
+        <section className={getClassName([
+          'flex',
+          'justify-center',
+        ])}
+        >
+          <Routes>
+            <Route
+              path="/"
+              element={<HomePage />}
+            />
+            <Route
+              path="/:city"
+              element={<>City or city not found</>}
+            />
+            <Route
+              path="*"
+              element={<>404</>}
+            />
+          </Routes>
+        </section>
       </div>
     </main>
   );

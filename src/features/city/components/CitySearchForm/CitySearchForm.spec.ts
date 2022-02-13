@@ -14,8 +14,12 @@ describe('CitySearchForm component', () => {
 
   it('renders without errors', () => {
     const citySearchForm = CitySearchFormPOStandalone.render();
+    const cityInputField = citySearchForm.getSearchFieldPO();
 
     citySearchForm.expectComponentExists();
+
+    cityInputField.expectFieldMessage('Please select preferred city.');
+    cityInputField.expectMessageStyling('info');
   });
 
   describe('when search button is clicked', () => {
@@ -31,7 +35,7 @@ describe('CitySearchForm component', () => {
       await waitFor(() => {
         const cityInputField = citySearchForm.getSearchFieldPO();
 
-        cityInputField.expectFieldMessage('Please provide a location name');
+        cityInputField.expectFieldMessage('Please provide a proper location name and select a city.');
         cityInputField.expectMessageStyling('error');
       });
     });
