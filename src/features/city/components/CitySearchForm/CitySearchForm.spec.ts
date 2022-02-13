@@ -1,5 +1,7 @@
 import { waitFor } from '@testing-library/react';
 import { CitySearchFormPOStandalone } from './CitySearchFormPO';
+import { setupMockServer } from '../../../../testUtils/setupMockServer';
+import { searchRequestHandlers } from '../../api/search.mock';
 
 const mockedUseNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -8,6 +10,8 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('CitySearchForm component', () => {
+  setupMockServer(...searchRequestHandlers);
+
   it('renders without errors', () => {
     const citySearchForm = CitySearchFormPOStandalone.render();
 
@@ -39,9 +43,15 @@ describe('CitySearchForm component', () => {
       citySearchForm.expectComponentExists();
       citySearchSelect.expectValueSelected('');
 
-      citySearchSelect.updateInputValue('Warszawa');
-      await citySearchForm.expectCityInList('Warszawa, Poland');
-      await citySearchSelect.clickOption('Warszawa, Poland');
+      citySearchSelect.updateInputValue('LocationName');
+      await citySearchForm.expectCityInList('LocationName 3, Somecountry');
+      await citySearchSelect.clickOption('LocationName 3, Somecountry');
+
+      citySearchForm.clickSearchButton();
+
+      await waitFor(() => {
+        expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

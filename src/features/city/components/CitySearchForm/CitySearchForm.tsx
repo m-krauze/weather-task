@@ -7,6 +7,7 @@ import { FieldMessage, FormField } from '../../../../components/FormField/FormFi
 import { SearchSelect, SearchSelectOption } from '../../../../components/SearchSelect/SearchSelect';
 import { RootState, useAppDispatch, useAppSelector } from '../../../../app/store';
 import { fetchByLocationName } from '../../locationsSlice';
+import { getClassName } from '../../../../utils/getClassName';
 
 interface CitySearchFormData {
   location: string;
@@ -18,7 +19,7 @@ export function CitySearchForm() {
   const fetchedLocations = useAppSelector((state: RootState) => state.locations.fetchedLocations);
 
   const {
-    handleSubmit, control, formState: { errors },
+    handleSubmit, control, formState: { errors, submitCount },
   } = useForm<CitySearchFormData>();
 
   const onSubmit: SubmitHandler<CitySearchFormData> = (formData) => {
@@ -33,16 +34,27 @@ export function CitySearchForm() {
   }));
 
   let msg: FieldMessage | undefined;
+  if (!errors.location && submitCount === 0) {
+    msg = {
+      ariaId: 'locationAlertMessage',
+      type: 'info',
+      text: 'Please select preferred city.',
+    };
+  }
   if (errors.location && errors.location.type === 'required') {
     msg = {
       ariaId: 'locationAlertMessage',
       type: 'error',
-      text: 'Please provide a location name',
+      text: 'Please provide a proper location name and select a city.',
     };
   }
 
   return (
-    <div>
+    <div className={getClassName([
+      'p-8',
+      'w-96',
+    ])}
+    >
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormField
           label="City"
@@ -74,10 +86,27 @@ export function CitySearchForm() {
             )}
           />
         </FormField>
-        <input
-          type="submit"
-          value="Search"
-        />
+        <div className={getClassName([
+          'flex',
+          'justify-end',
+        ])}
+        >
+          <input
+            type="submit"
+            value="Search"
+            className={getClassName([
+              'border-b-2',
+              'bg-sky-400',
+              'text-white',
+              'px-6',
+              'py-2',
+              'rounded-md',
+              'cursor-pointer',
+              'hover:bg-cyan-400',
+              'transition-all',
+            ])}
+          />
+        </div>
       </form>
     </div>
   );

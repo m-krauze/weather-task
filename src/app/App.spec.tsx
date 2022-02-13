@@ -3,6 +3,10 @@ import { render, screen } from '@testing-library/react';
 import { App } from './App';
 import { MockedProvider } from '../testUtils/MockedProvider';
 
+jest.mock('../pages/HomePage', () => ({
+  HomePage: () => <>Home</>,
+}));
+
 describe('Weather Task App', () => {
   it('renders without errors and shows the title', () => {
     render(

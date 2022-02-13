@@ -61,6 +61,20 @@ export function SearchSelect(props: SearchSelectProps) {
       }}
       placeholder={placeholder}
       noOptionsMessage={(searchObj) => noOptionsRender(searchObj.inputValue)}
+      styles={{
+        control: (provided, state) => ({
+          ...provided,
+          borderColor: state.menuIsOpen ? '#38bdf8' : '',
+          boxShadow: state.menuIsOpen ? '0 0 0 1px #38bdf8' : '',
+          '&:hover': {
+            borderColor: '#38bdf8',
+          },
+        }),
+        option: (provided, state) => ({
+          ...provided,
+          background: state.isSelected ? '#38bdf8' : '',
+        }),
+      }}
     />
   );
 }

@@ -22,10 +22,7 @@ const initialLocationsState: LocationsState = {
 
 export const fetchByLocationName = createAsyncThunk(
   'locations/fetchByLocationName',
-  async (locationName: string) => {
-    const res = await getLocations(locationName);
-    return res;
-  },
+  async (locationName: string) => getLocations(locationName),
 );
 
 export const locationsSlice = createSlice<LocationsState, {}>({

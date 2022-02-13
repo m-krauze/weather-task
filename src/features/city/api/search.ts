@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { GeoLocation } from './types';
-
-const apiHost = 'http://api.weatherapi.com/v1/';
-const apiKey = '41e88fc377b644eb99893831221302';
+import { apiHost, apiKey } from './global';
 
 export async function getLocations(query: string) {
   const url = `${apiHost}search.json`;

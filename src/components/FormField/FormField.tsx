@@ -21,21 +21,44 @@ export function FormField(props: PropsWithChildren<FormFieldProps>) {
   } = props;
 
   return (
-    <div>
-      <label htmlFor={inputId}>
+    <div className={getClassName([
+      'flex',
+      'flex-col',
+      'min-w-400',
+      'mb-6',
+    ])}
+    >
+      <label
+        className={getClassName([
+          'text-xl',
+          'pb-4',
+          'underline',
+          'underline-offset-1',
+          'decoration-sky-400',
+        ])}
+        htmlFor={inputId}
+      >
         {label}
       </label>
-      {children}
+      <div className={getClassName([
+        'mb-4',
+        'px-2',
+      ])}
+      >
+        {children}
+      </div>
       {message && (
         <div className={getClassName([
           'flex',
+          'px-2',
         ])}
         >
           <span
             id={message.ariaId}
             role="alert"
             className={getClassName([
-              'p-2',
+              'py-1',
+              'px-2',
               'rounded-lg',
               'border-2',
               message.type === 'info' && 'bg-slate-100 text-slate-600 border-slate-300',
