@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  fireEvent, getByRole, getByText, render, screen, waitFor,
+  fireEvent, getByRole, getByText, render,
 } from '@testing-library/react';
 import { SearchSelect, SearchSelectProps } from './SearchSelect';
 
@@ -41,6 +41,10 @@ export class SearchSelectPO {
 
   async clickOption(label: string) {
     fireEvent.click(getByText(this.container, label));
+  }
+
+  expectValueSelected(value: string) {
+    expect(this.elements.textInput.value).toMatch(value);
   }
 
   expectComponentExists() {

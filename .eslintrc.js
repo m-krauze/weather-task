@@ -29,6 +29,8 @@ module.exports = {
       'ignoreFunctionalComponents': true
     }],
     'react/jsx-props-no-spreading': 0,
-    'max-classes-per-file': ["error", 2]
+    'max-classes-per-file': ["error", 2],
+    'react/jsx-max-props-per-line': [1, { 'maximum': 1 }],
+    "no-param-reassign": ["error", { "props": false }]
   },
 };
