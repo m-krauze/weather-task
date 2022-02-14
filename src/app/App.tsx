@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 import { CloudIcon } from '@heroicons/react/solid';
 import { getClassName } from '../utils/getClassName';
 import { HomePage } from '../pages/HomePage';
+import { WeatherPage } from '../pages/WeatherPage';
+import { Page404 } from '../pages/Page404';
 
 export function App() {
   return (
@@ -57,11 +59,11 @@ export function App() {
             />
             <Route
               path="/:city"
-              element={<>City or city not found</>}
+              element={<WeatherPage />}
             />
             <Route
               path="*"
-              element={<>404</>}
+              element={<Page404 />}
             />
           </Routes>
         </section>

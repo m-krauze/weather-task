@@ -6,6 +6,12 @@ import { MockedProvider } from '../testUtils/MockedProvider';
 jest.mock('../pages/HomePage', () => ({
   HomePage: () => <>Home</>,
 }));
+jest.mock('../pages/WeatherPage', () => ({
+  WeatherPage: () => <>Weather Page</>,
+}));
+jest.mock('../pages/Page404', () => ({
+  Page404: () => <>Page 404</>,
+}));
 
 describe('Weather Task App', () => {
   it('renders without errors and shows the title', () => {
@@ -35,7 +41,7 @@ describe('Weather Task App', () => {
       </MockedProvider>,
     );
 
-    screen.getByText('City or city not found');
+    screen.getByText('Weather Page');
   });
 
   it('on unhandled path, render 404 page', () => {
@@ -45,6 +51,6 @@ describe('Weather Task App', () => {
       </MockedProvider>,
     );
 
-    screen.getByText('404');
+    screen.getByText('Page 404');
   });
 });
