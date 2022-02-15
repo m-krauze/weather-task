@@ -4,11 +4,12 @@ import { GeoLocation } from './api/types';
 
 export interface LocationsState {
   fetchedLocations: {
-    status: 'loading' | 'idle',
+    status: 'pending' | 'idle',
     list: GeoLocation[]
   },
   selectedLocation: GeoLocation | null,
   comparisonLocations: GeoLocation[],
+  selectedLocationModalOpened: boolean
 }
 
 const initialLocationsState: LocationsState = {
@@ -18,6 +19,7 @@ const initialLocationsState: LocationsState = {
   },
   selectedLocation: null,
   comparisonLocations: [],
+  selectedLocationModalOpened: false,
 };
 
 export const fetchByLocationName = createAsyncThunk(
@@ -25,20 +27,26 @@ export const fetchByLocationName = createAsyncThunk(
   async (locationName: string) => getLocations(locationName),
 );
 
-export const locationsSlice = createSlice<LocationsState, {}>({
+export const locationsSlice = createSlice({
   name: 'locations',
   initialState: initialLocationsState,
   reducers: {
+    openSelectedLocationModal: (locations) => {
+      locations.selectedLocationModalOpened = true;
+    },
+    closeSelectedLocationModal: (locations) => {
+      locations.selectedLocationModalOpened = false;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchByLocationName.pending, (locations: LocationsState) => {
+    builder.addCase(fetchByLocationName.pending, (locations) => {
       locations.fetchedLocations = {
-        status: 'loading',
+        status: 'pending',
         list: [],
       };
     });
 
-    builder.addCase(fetchByLocationName.fulfilled, (locations: LocationsState, action) => {
+    builder.addCase(fetchByLocationName.fulfilled, (locations, action) => {
       locations.fetchedLocations = {
         status: 'idle',
         list: action.payload,

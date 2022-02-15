@@ -71,7 +71,7 @@ export function CitySearchForm() {
               <SearchSelect
                 inputId="location"
                 options={options}
-                isLoading={fetchedLocations.status === 'loading'}
+                isLoading={fetchedLocations.status === 'pending'}
                 onInputChange={(val) => {
                   if (val !== '') {
                     dispatch(fetchByLocationName(val));
