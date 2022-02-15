@@ -3,3 +3,10 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+
+/**
+ * Adding portal container
+ */
+const appPortal = document.createElement('div');
+appPortal.id = 'portal';
+document.body.append(appPortal);
