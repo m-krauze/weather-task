@@ -8,14 +8,15 @@ export interface LocationsState {
     status: 'pending' | 'idle';
     list: GeoLocation[];
   };
-  selectedLocation: ApiWeatherData;
-  comparisonLocations: ApiWeatherData[];
+  selectedLocation: {
+    status: 'pending' | 'idle';
+    data: GeoLocationWeather | null;
+  };
+  comparisonLocations: {
+    status: 'pending' | 'idle';
+    data: GeoLocationWeather[] | null;
+  };
   selectedLocationModalOpened: boolean;
-}
-
-interface ApiWeatherData {
-  status: 'pending' | 'idle';
-  data: GeoLocationWeather | null;
 }
 
 const initialLocationsState: LocationsState = {
@@ -27,7 +28,10 @@ const initialLocationsState: LocationsState = {
     status: 'idle',
     data: null,
   },
-  comparisonLocations: [],
+  comparisonLocations: {
+    status: 'idle',
+    data: null,
+  },
   selectedLocationModalOpened: false,
 };
 
@@ -39,6 +43,22 @@ export const fetchByLocationName = createAsyncThunk(
 export const getSelectedLocationWeather = createAsyncThunk(
   'locations/getSelectedLocationWeather',
   async (locationUrl: string) => getWeather(locationUrl),
+);
+
+export const getComparisonLocationsWeather = createAsyncThunk(
+  'locations/getComparisonLocationsWeather',
+  async () => {
+    const staticCitiesURls = [
+      'krakow-poland',
+      'poznan-poland',
+      'wroclaw-poland',
+      'gdansk-poland',
+    ];
+
+    const promises = staticCitiesURls.map((cityUrl) => getWeather(cityUrl));
+
+    return Promise.all(promises);
+  },
 );
 
 export const locationsSlice = createSlice({
@@ -74,6 +94,19 @@ export const locationsSlice = createSlice({
     });
     builder.addCase(getSelectedLocationWeather.fulfilled, (locations, action) => {
       locations.selectedLocation = {
+        status: 'idle',
+        data: action.payload,
+      };
+    });
+
+    /**
+     * Comparison locations
+     */
+    builder.addCase(getComparisonLocationsWeather.pending, (locations) => {
+      locations.comparisonLocations.status = 'pending';
+    });
+    builder.addCase(getComparisonLocationsWeather.fulfilled, (locations, action) => {
+      locations.comparisonLocations = {
         status: 'idle',
         data: action.payload,
       };

@@ -17,17 +17,6 @@ export function MockedProvider(props: React.PropsWithChildren<MockedProviderProp
   const { children, path } = props;
   return (
     <Provider store={store}>
-
-      {/* <Router */}
-      {/*  navigator={history} */}
-      {/*  location={history.location} */}
-      {/* > */}
-      {/*  <Navigate */}
-      {/*    to={`${path || '/'}`} */}
-      {/*    replace */}
-      {/*  /> */}
-      {/*  {children} */}
-      {/* </Router> */}
       <MemoryRouter initialEntries={[ path || '/' ]}>
         {children}
       </MemoryRouter>

@@ -33,6 +33,7 @@ module.exports = {
     'react/jsx-max-props-per-line': [1, { 'maximum': 1 }],
     "no-param-reassign": ["error", { "props": false }],
     "react/jsx-one-expression-per-line": 0,
+    "react/no-array-index-key": 0,
     /**
      * Those jsx rules are ok, but:
      *

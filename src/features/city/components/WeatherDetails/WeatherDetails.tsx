@@ -131,56 +131,54 @@ export function WeatherDetails() {
   }
 
   return (
-    <div>
-      <ContentSection title="Weather Details">
+    <ContentSection title="Weather Details">
+      <div className={getClassName([
+        'flex',
+        'justify-between',
+        'items-center',
+      ])}
+      >
+        <SelectedCityLabel big />
         <div className={getClassName([
-          'flex',
-          'justify-between',
-          'items-center',
+          'ml-10',
         ])}
         >
-          <SelectedCityLabel />
-          <div className={getClassName([
-            'ml-10',
-          ])}
-          >
-            <h5>
-              Last updated: &nbsp;
-              {data.current.last_updated}
-            </h5>
-          </div>
+          <h5>
+            Last updated: &nbsp;
+            {data.current.last_updated}
+          </h5>
         </div>
+      </div>
+      <div className={getClassName([
+        'flex',
+        'flex-col',
+      ])}
+      >
         <div className={getClassName([
+          'p-2',
           'flex',
-          'flex-col',
         ])}
         >
           <div className={getClassName([
-            'p-2',
             'flex',
           ])}
           >
-            <div className={getClassName([
-              'flex',
-            ])}
-            >
-              <ConditionsBox condition={data.current.condition} />
-              <TempBox degrees={data.current.temp_c} />
-            </div>
-            <div className={getClassName([
-              'flex',
-            ])}
-            >
-              <WindDetails
-                windKph={data.current.wind_kph}
-                windDir={data.current.wind_dir}
-              />
-              <PressureDetails pressureMb={data.current.pressure_mb} />
-              <RainDetails precipMm={data.current.precip_mm} />
-            </div>
+            <ConditionsBox condition={data.current.condition} />
+            <TempBox degrees={data.current.temp_c} />
+          </div>
+          <div className={getClassName([
+            'flex',
+          ])}
+          >
+            <WindDetails
+              windKph={data.current.wind_kph}
+              windDir={data.current.wind_dir}
+            />
+            <PressureDetails pressureMb={data.current.pressure_mb} />
+            <RainDetails precipMm={data.current.precip_mm} />
           </div>
         </div>
-      </ContentSection>
-    </div>
+      </div>
+    </ContentSection>
   );
 }

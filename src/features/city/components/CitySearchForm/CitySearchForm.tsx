@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
 
 import { FieldMessage, FormField } from '../../../../components/FormField/FormField';
 import { SearchSelect, SearchSelectOption } from '../../../../components/SearchSelect/SearchSelect';
-import { RootState, useAppDispatch, useAppSelector } from '../../../../app/store';
+import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { fetchByLocationName } from '../../locationsSlice';
 import { getClassName } from '../../../../utils/getClassName';
+import { selectFetchedLocations } from '../../locationsSliceSelectors';
 
 interface CitySearchFormData {
   location: string;
@@ -21,11 +22,19 @@ export function CitySearchForm(props: CitySearchFormProps) {
   const { afterSuccess } = props;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const fetchedLocations = useAppSelector((state: RootState) => state.locations.fetchedLocations);
+  const fetchedLocations = useAppSelector(selectFetchedLocations);
+  const [ locationSelected, setLocationSelected ] = useState(false);
 
   const {
-    handleSubmit, control, formState: { errors, submitCount },
+    handleSubmit, control, formState: { errors },
   } = useForm<CitySearchFormData>();
+  const hasLocations = fetchedLocations.list.length > 0;
+  const uniqueLocations = hasLocations ? _.uniqBy(fetchedLocations.list, 'url') : [];
+
+  const options: SearchSelectOption[] = uniqueLocations.map((location) => ({
+    value: location.url,
+    label: `${location.name}, ${location.country}`,
+  }));
 
   const onSubmit: SubmitHandler<CitySearchFormData> = (formData) => {
     navigate(`/${formData.location}`);
@@ -35,15 +44,8 @@ export function CitySearchForm(props: CitySearchFormProps) {
     }
   };
 
-  const hasLocations = fetchedLocations.list.length > 0;
-  const uniqueLocations = hasLocations ? _.uniqBy(fetchedLocations.list, 'url') : [];
-  const options: SearchSelectOption[] = uniqueLocations.map((location) => ({
-    value: location.url,
-    label: `${location.name}, ${location.country}`,
-  }));
-
   let msg: FieldMessage | undefined;
-  if (!errors.location && submitCount === 0) {
+  if (!errors.location && !locationSelected) {
     msg = {
       ariaId: 'locationAlertMessage',
       type: 'info',
@@ -88,7 +90,10 @@ export function CitySearchForm(props: CitySearchFormProps) {
                 }}
                 onSelect={(selectedLocation) => {
                   if (selectedLocation) {
+                    setLocationSelected(true);
                     onChange(selectedLocation.value);
+                  } else {
+                    setLocationSelected(false);
                   }
                 }}
               />

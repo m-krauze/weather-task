@@ -8,7 +8,10 @@ describe('Locations reducer', () => {
       status: 'idle',
       data: null,
     },
-    comparisonLocations: [],
+    comparisonLocations: {
+      status: 'idle',
+      data: null,
+    },
     fetchedLocations: {
       status: 'idle',
       list: [],

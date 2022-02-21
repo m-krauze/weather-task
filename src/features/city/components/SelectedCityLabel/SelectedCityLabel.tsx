@@ -7,7 +7,12 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store';
 import { selectCurrentLocation } from '../../locationsSliceSelectors';
 import { openSelectedLocationModal } from '../../locationsSlice';
 
-export function SelectedCityLabel() {
+interface SelectedCityLabelProps {
+  big?: boolean
+}
+
+export function SelectedCityLabel(props: SelectedCityLabelProps) {
+  const { big } = props;
   const location = useAppSelector(selectCurrentLocation);
   const dispatch = useAppDispatch();
 
@@ -27,7 +32,7 @@ export function SelectedCityLabel() {
     >
       <h3 className={getClassName([
         'font-bold',
-        'text-xl',
+        big && 'text-xl',
       ])}
       >
         {getLocationLabel(location.data)}
@@ -49,8 +54,8 @@ export function SelectedCityLabel() {
           ])}
         >
           <div className={getClassName([
-            'h-6',
-            'w-6',
+            big ? 'h-6' : 'w-3',
+            big ? 'w-6' : 'w-3',
           ])}
           >
             <PencilAltIcon fill="#FFFFFF" />

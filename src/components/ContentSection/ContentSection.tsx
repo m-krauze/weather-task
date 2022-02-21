@@ -12,7 +12,11 @@ export function ContentSection(props: PropsWithChildren<ContentSectionProps>) {
     <section className={getClassName([
       'flex',
       'flex-col',
-      'p-2',
+      'py-4',
+      'px-2',
+      'border-b-2',
+      'border-sky-400',
+      'mb-2',
     ])}
     >
       <h2>

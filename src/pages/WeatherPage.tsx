@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import { ContentWrap } from '../components/ContentWrap/ContentWrap';
 import { getClassName } from '../utils/getClassName';
 import { WeatherDetails } from '../features/city/components/WeatherDetails/WeatherDetails';
 import { useAppDispatch, useAppSelector } from '../app/store';
-import { closeSelectedLocationModal, getSelectedLocationWeather } from '../features/city/locationsSlice';
+import {
+  closeSelectedLocationModal,
+  getComparisonLocationsWeather,
+  getSelectedLocationWeather,
+} from '../features/city/locationsSlice';
 import { selectModalOpened } from '../features/city/locationsSliceSelectors';
 import { Modal } from '../components/Modal/Modal';
 import { CitySearchForm } from '../features/city/components/CitySearchForm/CitySearchForm';
+import { WeatherComparison } from '../features/city/components/WeatherComparison/WeatherComparison';
 
 export function WeatherPage() {
   const dispatch = useAppDispatch();
@@ -20,6 +26,7 @@ export function WeatherPage() {
     }
 
     dispatch(getSelectedLocationWeather(city));
+    dispatch(getComparisonLocationsWeather());
   }, [ city ]);
 
   const closeModal = () => dispatch(closeSelectedLocationModal());
@@ -30,12 +37,8 @@ export function WeatherPage() {
         'p-4',
       ])}
       >
-        <section>
-          <WeatherDetails />
-        </section>
-        <section>
-          Weather comparision
-        </section>
+        <WeatherDetails />
+        <WeatherComparison />
       </div>
       {modalOpened && (
         <Modal close={closeModal}>
