@@ -1,5 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+
 import { Provider } from 'react-redux';
 import { store } from '../app/store';
 
@@ -13,11 +14,21 @@ interface MockedProviderProps {
 }
 
 export function MockedProvider(props: React.PropsWithChildren<MockedProviderProps>) {
-  const { children, path = '/' } = props;
-
+  const { children, path } = props;
   return (
     <Provider store={store}>
-      <MemoryRouter initialEntries={[ path ]}>
+
+      {/* <Router */}
+      {/*  navigator={history} */}
+      {/*  location={history.location} */}
+      {/* > */}
+      {/*  <Navigate */}
+      {/*    to={`${path || '/'}`} */}
+      {/*    replace */}
+      {/*  /> */}
+      {/*  {children} */}
+      {/* </Router> */}
+      <MemoryRouter initialEntries={[ path || '/' ]}>
         {children}
       </MemoryRouter>
     </Provider>

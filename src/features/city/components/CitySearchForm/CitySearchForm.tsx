@@ -13,7 +13,12 @@ interface CitySearchFormData {
   location: string;
 }
 
-export function CitySearchForm() {
+interface CitySearchFormProps {
+  afterSuccess?: () => void;
+}
+
+export function CitySearchForm(props: CitySearchFormProps) {
+  const { afterSuccess } = props;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const fetchedLocations = useAppSelector((state: RootState) => state.locations.fetchedLocations);
@@ -23,7 +28,11 @@ export function CitySearchForm() {
   } = useForm<CitySearchFormData>();
 
   const onSubmit: SubmitHandler<CitySearchFormData> = (formData) => {
-    navigate(`${formData.location}`);
+    navigate(`/${formData.location}`);
+
+    if (afterSuccess) {
+      afterSuccess();
+    }
   };
 
   const hasLocations = fetchedLocations.list.length > 0;

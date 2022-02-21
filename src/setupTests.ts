@@ -8,5 +8,5 @@ import '@testing-library/jest-dom';
  * Adding portal container
  */
 const appPortal = document.createElement('div');
-appPortal.id = 'portal';
+appPortal.id = 'modal-portal';
 document.body.append(appPortal);

@@ -4,7 +4,10 @@ import { locationsSlice, LocationsState } from './locationsSlice';
 describe('Locations reducer', () => {
   const initialState: LocationsState = {
     selectedLocationModalOpened: false,
-    selectedLocation: null,
+    selectedLocation: {
+      status: 'idle',
+      data: null,
+    },
     comparisonLocations: [],
     fetchedLocations: {
       status: 'idle',

@@ -1,8 +1,8 @@
 import { rest } from 'msw';
-import { apiHost, apiKey } from './global';
+import { apiHost } from './global';
 import { GeoLocation } from './types';
 
-const locationsMock: GeoLocation[] = [
+export const locationsMock: GeoLocation[] = [
   {
     id: 120,
     region: 'someregion',

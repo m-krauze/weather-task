@@ -36,7 +36,7 @@ describe('Weather Task App', () => {
 
   it('on "city" path, renders "city page"', () => {
     render(
-      <MockedProvider path="/cityname">
+      <MockedProvider path="/matched-city">
         <App />
       </MockedProvider>,
     );
@@ -46,7 +46,7 @@ describe('Weather Task App', () => {
 
   it('on unhandled path, render 404 page', () => {
     render(
-      <MockedProvider path="/whatever/blahblah">
+      <MockedProvider path="/matched-with-city/somethingnotmatched">
         <App />
       </MockedProvider>,
     );

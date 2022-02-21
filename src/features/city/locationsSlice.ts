@@ -1,15 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getLocations } from './api/search';
-import { GeoLocation } from './api/types';
+import { GeoLocation, GeoLocationWeather } from './api/types';
+import { getWeather } from './api/current';
 
 export interface LocationsState {
   fetchedLocations: {
-    status: 'pending' | 'idle',
-    list: GeoLocation[]
-  },
-  selectedLocation: GeoLocation | null,
-  comparisonLocations: GeoLocation[],
-  selectedLocationModalOpened: boolean
+    status: 'pending' | 'idle';
+    list: GeoLocation[];
+  };
+  selectedLocation: ApiWeatherData;
+  comparisonLocations: ApiWeatherData[];
+  selectedLocationModalOpened: boolean;
+}
+
+interface ApiWeatherData {
+  status: 'pending' | 'idle';
+  data: GeoLocationWeather | null;
 }
 
 const initialLocationsState: LocationsState = {
@@ -17,7 +23,10 @@ const initialLocationsState: LocationsState = {
     status: 'idle',
     list: [],
   },
-  selectedLocation: null,
+  selectedLocation: {
+    status: 'idle',
+    data: null,
+  },
   comparisonLocations: [],
   selectedLocationModalOpened: false,
 };
@@ -25,6 +34,11 @@ const initialLocationsState: LocationsState = {
 export const fetchByLocationName = createAsyncThunk(
   'locations/fetchByLocationName',
   async (locationName: string) => getLocations(locationName),
+);
+
+export const getSelectedLocationWeather = createAsyncThunk(
+  'locations/getSelectedLocationWeather',
+  async (locationUrl: string) => getWeather(locationUrl),
 );
 
 export const locationsSlice = createSlice({
@@ -39,18 +53,32 @@ export const locationsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    /**
+     * Location search
+     */
     builder.addCase(fetchByLocationName.pending, (locations) => {
-      locations.fetchedLocations = {
-        status: 'pending',
-        list: [],
-      };
+      locations.fetchedLocations.status = 'pending';
     });
-
     builder.addCase(fetchByLocationName.fulfilled, (locations, action) => {
       locations.fetchedLocations = {
         status: 'idle',
         list: action.payload,
       };
     });
+
+    /**
+     * Selected location weather
+     */
+    builder.addCase(getSelectedLocationWeather.pending, (locations) => {
+      locations.selectedLocation.status = 'pending';
+    });
+    builder.addCase(getSelectedLocationWeather.fulfilled, (locations, action) => {
+      locations.selectedLocation = {
+        status: 'idle',
+        data: action.payload,
+      };
+    });
   },
 });
+
+export const { openSelectedLocationModal, closeSelectedLocationModal } = locationsSlice.actions;
