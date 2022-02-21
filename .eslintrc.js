@@ -32,6 +32,7 @@ module.exports = {
     'max-classes-per-file': ["error", 2],
     'react/jsx-max-props-per-line': [1, { 'maximum': 1 }],
     "no-param-reassign": ["error", { "props": false }],
+    "react/jsx-one-expression-per-line": 0,
     /**
      * Those jsx rules are ok, but:
      *
@@ -44,6 +45,6 @@ module.exports = {
      * that handles aria well. For example, "non-interactive" modal overlay and "aria interactive" close button.
      */
     "jsx-a11y/click-events-have-key-events": 0,
-    "jsx-a11y/no-noninteractive-element-interactions": 0
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
   },
 };

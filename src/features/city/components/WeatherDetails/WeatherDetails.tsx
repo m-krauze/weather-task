@@ -48,6 +48,78 @@ function ConditionsBox({ condition }: PropsWithChildren<{ condition: GeoLocation
   );
 }
 
+interface DetailsBoxProps {
+  title: string;
+}
+
+function DetailsBox(props: PropsWithChildren<DetailsBoxProps>) {
+  const { children, title } = props;
+
+  return (
+    <div
+      className={getClassName([
+        'flex',
+        'flex-col',
+        'p-4',
+      ])}
+    >
+      <h5 className={getClassName([
+        'text-lg',
+        'font-bold',
+      ])}
+      >
+        {title}
+      </h5>
+      <div>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+interface WindDetailsProps {
+  windKph: number;
+  windDir: string;
+}
+
+function WindDetails(props: WindDetailsProps) {
+  const { windKph, windDir } = props;
+  return (
+    <DetailsBox title="Wind">
+      {windKph} km/h <br />
+      direction - {windDir}
+    </DetailsBox>
+  );
+}
+
+interface PressureDetailsProps {
+  pressureMb: number;
+}
+
+function PressureDetails(props: PressureDetailsProps) {
+  const { pressureMb } = props;
+
+  return (
+    <DetailsBox title="Pressure">
+      {pressureMb} hPa
+    </DetailsBox>
+  );
+}
+
+interface RainDetailsProps {
+  precipMm: number;
+}
+
+function RainDetails(props: RainDetailsProps) {
+  const { precipMm } = props;
+
+  return (
+    <DetailsBox title="Rain">
+      {precipMm} mm
+    </DetailsBox>
+  );
+}
+
 /**
  * Component
  */
@@ -98,7 +170,14 @@ export function WeatherDetails() {
             <div className={getClassName([
               'flex',
             ])}
-            />
+            >
+              <WindDetails
+                windKph={data.current.wind_kph}
+                windDir={data.current.wind_dir}
+              />
+              <PressureDetails pressureMb={data.current.pressure_mb} />
+              <RainDetails precipMm={data.current.precip_mm} />
+            </div>
           </div>
         </div>
       </ContentSection>
